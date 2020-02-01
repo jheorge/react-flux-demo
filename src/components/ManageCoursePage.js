@@ -13,15 +13,25 @@ function ManageCoursePage(props) {
     category: ""
   });
 
-  function handleTitleChange(event) {
-    const updatedCourse = { ...course, title: event.target.value };
+  function handleChange(event) {
+    const updatedCourse = {
+      ...course,
+      [event.target.name]: event.target.value
+    }; //computed property in javascript []
     setCourse(updatedCourse);
   }
+  //other option for do the same of above
+  // function handleChange({ target }) {
+  //   setCourse({
+  //     ...course,
+  //     [target.name]: target.value
+  //   });
+  // }
 
   return (
     <div>
       <h2>Manage course</h2>
-      <CourseForm course={course} onTitleChange={handleTitleChange} />
+      <CourseForm course={course} onChange={handleChange} />
     </div>
   );
 }
