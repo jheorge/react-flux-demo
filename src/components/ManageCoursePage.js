@@ -31,7 +31,9 @@ function ManageCoursePage(props) {
 
   function handleSubmit(event) {
     event.preventDefault(); //this will prevent theh page from posting back to the server
-    courseApi.saveCourse(course);
+    courseApi.saveCourse(course).then(() => {
+      props.history.push("/courses");
+    });
   }
 
   return (
