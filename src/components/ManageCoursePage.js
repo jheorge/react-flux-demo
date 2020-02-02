@@ -32,6 +32,13 @@ function ManageCoursePage(props) {
   //   });
   // }
 
+  useEffect(() => {
+    const slug = props.match.params.slug;
+    if (slug) {
+      courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+    }
+  }, [props.match.params.slug]);
+
   function handleSubmit(event) {
     event.preventDefault(); //this will prevent theh page from posting back to the server
     if (!formIsValid()) return;
