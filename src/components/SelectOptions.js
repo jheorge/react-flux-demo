@@ -17,6 +17,7 @@ function SelectOptions(props) {
           })}
         </select>
       </div>
+      {props.error && <div className="alert alert-danger">{props.error}</div>}
     </div>
   );
 }

@@ -15,6 +15,8 @@ function ManageCoursePage(props) {
     category: ""
   });
 
+  const [errors, setErrors] = useState({});
+
   function handleChange(event) {
     const updatedCourse = {
       ...course,
@@ -32,10 +34,21 @@ function ManageCoursePage(props) {
 
   function handleSubmit(event) {
     event.preventDefault(); //this will prevent theh page from posting back to the server
+    if (!formIsValid()) return;
     courseApi.saveCourse(course).then(() => {
       props.history.push("/courses");
       toast.success("Course saved.");
     });
+  }
+
+  function formIsValid() {
+    const _errors = {};
+    if (!course.title) _errors.title = "Title is required";
+    if (!course.authorId) _errors.authorId = "AuthorId is required";
+    if (!course.category) _errors.category = "Category is required";
+    setErrors(_errors);
+    //form is valid if the errors object does not have properties
+    return Object.keys(_errors).length === 0;
   }
 
   return (
@@ -45,6 +58,7 @@ function ManageCoursePage(props) {
         course={course}
         onChange={handleChange}
         onSubmit={handleSubmit}
+        errors={errors}
       />
     </div>
   );
