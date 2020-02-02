@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Prompt } from "react-router-dom";
 import CourseForm from "./CourseForm";
 import * as courseApi from "../api/courseApi.js";
+import { toast } from "react-toastify";
 
 // <Prompt when={true} message="Are you sure you want to leave?" />
 // {props.match.params.slug}
@@ -33,6 +34,7 @@ function ManageCoursePage(props) {
     event.preventDefault(); //this will prevent theh page from posting back to the server
     courseApi.saveCourse(course).then(() => {
       props.history.push("/courses");
+      toast.success("Course saved.");
     });
   }
 
