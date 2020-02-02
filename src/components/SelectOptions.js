@@ -12,11 +12,9 @@ function SelectOptions(props) {
           className="form-control"
           onChange={props.onChange}
         >
-          return(
           {props.options.map(option => {
-            <option value={option.value}>{option.label}</option>;
+            return <option value={option.value}>{option.label}</option>;
           })}
-          );
         </select>
       </div>
     </div>

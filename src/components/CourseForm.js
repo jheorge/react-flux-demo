@@ -4,7 +4,7 @@ import SelectOptions from "./SelectOptions";
 
 function CourseForm(props) {
   return (
-    <form>
+    <form onSubmit={props.onSubmit}>
       <TextInput
         id="title"
         type="text"
@@ -27,7 +27,7 @@ function CourseForm(props) {
         type="text"
         id="category"
         name="category"
-        lable="category"
+        label="category"
         className="form-control"
         value={props.course.category}
         onChange={props.onChange}
