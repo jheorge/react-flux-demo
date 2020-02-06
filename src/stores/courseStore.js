@@ -1,6 +1,9 @@
 import { EventEmitter } from "events";
 import Dispatcher from "../appDispatcher.js";
+import actionsType from "../actions/actionsTypes.js";
+
 const CHANGE_EVENT = "change";
+let _courses = [];
 
 class CourseStore extends addEventListener {
   addChangeListenr(callback) {
@@ -12,12 +15,21 @@ class CourseStore extends addEventListener {
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
+
+  getCourses(slug) {
+    return _courses;
+  }
+  getCourseBySlug() {
+    return _courses.find(course => course.slug === slug);
+  }
 }
 
-const CourseStore = new CourseStore();
+const store = new CourseStore();
 Dispatcher.register(action => {
   switch (action.actionType) {
-    case value:
+    case actionsType.CREATE_COURSE:
+      _courses.push(action.course);
+      store.emitChange();
       break;
 
     default:
