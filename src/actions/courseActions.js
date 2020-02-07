@@ -2,7 +2,7 @@ import dispatcher from "../appDispatcher.js";
 import * as courseApi from "../api/courseApi.js";
 import actionTypes from "./actionsTypes.js";
 
-function saveCourse(course) {
+export function saveCourse(course) {
   return courseApi.saveCourse(course).then(savedCourse => {
     // hey dispatcher , go tell all the stores that course was just created
     dispatcher.dispatch({

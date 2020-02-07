@@ -1,11 +1,11 @@
 import { EventEmitter } from "events";
-import Dispatcher from "../appDispatcher.js";
+import dispatcher from "../appDispatcher.js";
 import actionsType from "../actions/actionsTypes.js";
 
 const CHANGE_EVENT = "change";
 let _courses = [];
 
-class CourseStore extends addEventListener {
+class CourseStore extends EventEmitter {
   addChangeListenr(callback) {
     this.on(CHANGE_EVENT, callback);
   }
@@ -19,13 +19,16 @@ class CourseStore extends addEventListener {
   getCourses(slug) {
     return _courses;
   }
-  getCourseBySlug() {
-    return _courses.find(course => course.slug === slug);
+  getCourseBySlug(slug) {
+    return _courses.find(course => {
+      course.slug === slug;
+    });
   }
 }
 
 const store = new CourseStore();
-Dispatcher.register(action => {
+
+dispatcher.register(action => {
   switch (action.actionType) {
     case actionsType.CREATE_COURSE:
       _courses.push(action.course);
@@ -36,3 +39,5 @@ Dispatcher.register(action => {
       break;
   }
 });
+
+export default store;

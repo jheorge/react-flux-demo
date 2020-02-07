@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Prompt } from "react-router-dom";
 import CourseForm from "./CourseForm";
-import * as courseApi from "../api/courseApi.js";
 import { toast } from "react-toastify";
-
+import courseStore from "../stores/courseStore.js";
+import * as courseActions from "../actions/courseActions.js";
 // <Prompt when={true} message="Are you sure you want to leave?" />
 // {props.match.params.slug}
 function ManageCoursePage(props) {
@@ -35,14 +35,14 @@ function ManageCoursePage(props) {
   useEffect(() => {
     const slug = props.match.params.slug;
     if (slug) {
-      courseApi.getCourseBySlug(slug).then(_course => setCourse(_course));
+      setCourse(courseStore.getCourseBySlug(slug));
     }
   }, [props.match.params.slug]);
 
   function handleSubmit(event) {
     event.preventDefault(); //this will prevent theh page from posting back to the server
     if (!formIsValid()) return;
-    courseApi.saveCourse(course).then(() => {
+    courseActions.saveCourse(course).then(() => {
       props.history.push("/courses");
       toast.success("Course saved.");
     });
