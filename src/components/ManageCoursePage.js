@@ -15,6 +15,8 @@ function ManageCoursePage(props) {
     category: ""
   });
 
+  const [courses, setCourses] = useState(courseStore.getCourses());
+
   const [errors, setErrors] = useState({});
 
   function handleChange(event) {
@@ -33,11 +35,15 @@ function ManageCoursePage(props) {
   // }
 
   useEffect(() => {
+    courseStore.addChangeListenr(onChange);
     const slug = props.match.params.slug;
-    if (slug) {
+    if (courses.length() === 0) {
+      courseActions.loadCourses();
+    } else if (slug) {
       setCourse(courseStore.getCourseBySlug(slug));
     }
-  }, [props.match.params.slug]);
+    return () => courseStore.removeChangeListener(onChange);
+  }, [courses.length, props.match.params.slug]);
 
   function handleSubmit(event) {
     event.preventDefault(); //this will prevent theh page from posting back to the server
